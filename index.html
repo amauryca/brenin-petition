@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f5f5f5;
+}
+
+.container { 
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: rgb(3, 234, 3);
+  border: 2px solid rgb(3, 234, 3);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.3s;
+}
+
+button:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #666;
+  margin: 20px 0;
+}
+r{
+    color: red;
+}
+
+#message {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+</style>
+  <title>Brenin Petition</title>
+</head>
+<body>
+
+<div class="container">
+  <h1>Sign off on <r>Brenin's</r> Demise</h1>
+  
+  <button id="clickBtn" onclick="handleClick()">Click Me Once</button>
+  
+  <h2>Total Clicks: <span id="counter">0</span></h2>
+  <p id="message"></p>
+  
+  <img src="IMG_5620.jpg" alt="Brenin image">
+</div>
+
+<script>
+  function initializeCounter() {
+    const today = new Date().toDateString();
+    const lastClickDate = localStorage.getItem('lastClickDate');
+    const clickCount = parseInt(localStorage.getItem('clickCount') || '0');
+    
+    document.getElementById('counter').textContent = clickCount;
+    
+    const btn = document.getElementById('clickBtn');
+    
+    if (lastClickDate === today) {
+      btn.disabled = true;
+      document.getElementById('message').textContent = '✓ You already clicked today. Come back tomorrow!';
+      document.getElementById('message').style.color = 'green';
+    } else {
+      btn.disabled = false;
+      document.getElementById('message').textContent = '';
+    }
+  }
+  
+  function handleClick() {
+    const today = new Date().toDateString();
+    const lastClickDate = localStorage.getItem('lastClickDate');
+    
+    if (lastClickDate === today) {
+      alert('You can only click once per day!');
+      return;
+    }
+    
+    let clickCount = parseInt(localStorage.getItem('clickCount') || '0');
+    clickCount++;
+    localStorage.setItem('clickCount', clickCount);
+    localStorage.setItem('lastClickDate', today);
+    
+    document.getElementById('counter').textContent = clickCount;
+    document.getElementById('message').textContent = '✓ Click recorded! See you tomorrow!';
+    document.getElementById('message').style.color = 'green';
+    
+    document.getElementById('clickBtn').disabled = true;
+  }
+  
+  document.addEventListener('DOMContentLoaded', initializeCounter);
+</script>
+
+</body>
+</html>
